@@ -2,22 +2,30 @@
 """ Test
 """
 from models.engine.file_storage import FileStorage
+from models.state import State
 from inspect import isfunction
 
 
-delete_fct = FileStorage.__dict__.get("delete")
-if delete_fct is None:
-    print("Missing public instance method `delete`")
+all_fct = FileStorage.__dict__.get("all")
+if all_fct is None:
+    print("Missing public instance method `all`")
     exit(1)
 
-if not isfunction(delete_fct):
-    print("`delete` is not a function")
+if not isfunction(all_fct):
+    print("`all` is not a function")
     exit(1)
 
 fs = FileStorage()
 try:
-    fs.delete()
-    print("OK", end="")
+    fs.all()
 except:
-    print("`delete` is not a public instance method allowing no parameter")
+    print("`all` is not a public instance method allowing no parameter")
     exit(1)
+
+try:
+    fs.all(State)
+except:
+    print("`all` is not a public instance method allowing a class parameter")
+    exit(1)
+
+print("OK", end="")
