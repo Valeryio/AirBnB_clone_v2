@@ -59,7 +59,7 @@ class FileStorage:
     def delete(self, obj=None):
         """Deletes new object content"""
         if obj is not None:
-            obj_id = str(obj.classname) + obj.id
+            obj_id = str(obj.__class__.__name__) + obj.id
             print("The ID : ", obj_id)
 
             if obj in self.__objects:

@@ -3,29 +3,39 @@
 """
 from models.engine.file_storage import FileStorage
 from models.state import State
-from inspect import isfunction
+import os
 
 
-all_fct = FileStorage.__dict__.get("all")
-if all_fct is None:
-    print("Missing public instance method `all`")
-    exit(1)
+if os.path.exists(FileStorage._FileStorage__file_path):
+    os.remove(FileStorage._FileStorage__file_path)
 
-if not isfunction(all_fct):
-    print("`all` is not a function")
-    exit(1)
 
 fs = FileStorage()
-try:
-    fs.all()
-except:
-    print("`all` is not a public instance method allowing no parameter")
-    exit(1)
 
+# Create a new State
+new_state = State()
+new_state.name = "California"
+fs.new(new_state)
+fs.save()
+key_search = "{}.{}".format("State", new_state.id)
+
+# Delete nothing
+fs.delete(new_state)
+
+
+# All States
+all_objs = fs.all()
 try:
-    fs.all(State)
+    all_objs.update(fs.all(State))
 except:
-    print("`all` is not a public instance method allowing a class parameter")
+    pass
+try:
+    all_objs.update(fs.all("State"))
+except:
+    pass
+
+if all_objs.get(key_search) is not None:
+    print("State created and deleted should not be in the list of objects")
     exit(1)
 
 print("OK", end="")
