@@ -1,5 +1,6 @@
 from models.base_model import Base
 from sqlalchemy import *
+import os
 from sqlalchemy.orm import sessionmaker
 from models.city import City
 from models.state import State
