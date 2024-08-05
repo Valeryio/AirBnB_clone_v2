@@ -28,6 +28,8 @@ class DBStorage:
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(bind=engine.connect())
+
+        print("All seems here")
         """
         Base.metadata.create_all(engine)
         session_factory = sessionmaker(bind=engine, expire_on_commit=False)
