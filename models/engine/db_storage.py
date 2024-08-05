@@ -1,7 +1,7 @@
-from models.base_model import Base
-from sqlalchemy import *
-from sqlalchemy.orm import scoped_session
 import os
+from sqlalchemy import *
+from models.base_model import Base, BaseModel
+from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from models.city import City
 from models.state import State
@@ -29,7 +29,7 @@ class DBStorage:
         self.engine = create_engine(db, pool_pre_ping="True")
 
         if HBNB_ENV == "test":
-            Base.metadata.drop_all(bind=engine.connect())
+            Base.metadata.drop_all(bind=self.engine.connect())
 
         """
         Base.metadata.create_all(engine)
