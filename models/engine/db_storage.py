@@ -29,6 +29,9 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(bind=engine.connect())
 
+        Base.metadata.create_all(engine)
+        session_factory = sessionmaker(bind=engine, expire_on_commit=False)
+        self.session = scoped_session(session_factory)
 
     @property
     def session(self):
@@ -72,6 +75,5 @@ class DBStorage:
     def reload(self):
         """reload the database"""
         Base.metadata.create_all(engine)
-
         session_factory = sessionmaker(bind=engine, expire_on_commit=False)
         self.session = scoped_session(session_factory)
