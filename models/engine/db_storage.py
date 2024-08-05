@@ -66,9 +66,11 @@ class DBStorage:
     def all(self, cls=None):
         """query all types of objects"""
         if cls is not None:
-            result = self.session.scalars(select(cls)).all()
+            # result = self.session.scalars(select(cls)).all()
+            result = self.session.execute(select(cls)).all()
         else:
-            result = self.session.scalars(select(City, State)).all()
+            # result = self.session.scalars(select(City)).all()
+            result = self.session.execute(select(City)).all()
 
         # creating a dictionary with all the object queried
         all_obj = {}
