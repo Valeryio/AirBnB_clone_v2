@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+import os
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -11,6 +12,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+
+HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -121,13 +124,13 @@ class HBNBCommand(cmd.Cmd):
         class_name, args = line_args[0], line_args[1:]
 
         # respectively replace the '"' and '=' by '' and ':'
-        args = list(map(lambda x: x.replace("\"", "").replace("=", ":"), args))
+        # args = list(map(lambda x: x.replace("\"", "").replace("=", ":"), args))
 
         # change each item into a new list name=Linson => ['name', 'Linson']
-        args = list(map(lambda x: x.split(':'), args))
+        # args = list(map(lambda x: x.split(':'), args))
         print("THe simple dict : ", args)
 
-        args = {item[0]: item[1] for item in args}
+        # args = {item[0]: item[1] for item in args}
 
         if not class_name:
             print("** class name missing **")
@@ -138,8 +141,8 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance = HBNBCommand.classes[class_name]()
 
-        for key, value in args.items():
-            setattr(new_instance, key, value)
+        # for key, value in args.items():
+            # setattr(new_instance, key, value)
 
         storage.save()
         print(new_instance.id)
@@ -173,10 +176,14 @@ class HBNBCommand(cmd.Cmd):
             return
 
         key = c_name + "." + c_id
-        try:
-            print(storage._FileStorage__objects[key])
-        except KeyError:
-            print("** no instance found **")
+
+        if HBNB_TYPE_STORAGE != "db":
+            try:
+                print(storage._FileStorage__objects[key])
+            except KeyError:
+                print("** no instance found **")
+        else:
+            print("Soon...")
 
     def help_show(self):
         """ Help information for the show command """
