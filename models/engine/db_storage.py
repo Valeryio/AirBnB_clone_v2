@@ -24,14 +24,15 @@ class DBStorage:
         HBNB_ENV = os.getenv("HBNB_ENV")
 
         db = f"mysql+mysqldb://{HBNB_MYSQL_DB}:{HBNB_MYSQL_USER}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_PWD}"
-        engine = create_engine(db, pool_pre_ping="True")
+        self.engine = create_engine(db, pool_pre_ping="True")
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(bind=engine.connect())
-
+        """
         Base.metadata.create_all(engine)
         session_factory = sessionmaker(bind=engine, expire_on_commit=False)
         self.session = scoped_session(session_factory)
+        """
 
     @property
     def session(self):
@@ -40,10 +41,24 @@ class DBStorage:
 
     @session.setter
     def session(self, obj):
+        """setter of the private attribute engine"""
         if obj is not None:
             self.__session = obj
         else:
             print("Empty session object!")
+
+    @property
+    def engine(self):
+        """getter of the private attribute engine"""
+        return self.__engine
+
+    @engine.setter
+    def engine(self, obj):
+        """setter of the private attribute engine"""
+        if obj is not None:
+            self.__engine = obj
+        else:
+            print("Engine object not set!")
 
     def all(self, cls=None):
         """query all types of objects"""
@@ -74,6 +89,6 @@ class DBStorage:
 
     def reload(self):
         """reload the database"""
-        Base.metadata.create_all(engine)
-        session_factory = sessionmaker(bind=engine, expire_on_commit=False)
+        Base.metadata.create_all(self.engine)
+        session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
         self.session = scoped_session(session_factory)
