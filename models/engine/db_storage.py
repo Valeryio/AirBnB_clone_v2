@@ -1,5 +1,6 @@
 from models.base_model import Base
 from sqlalchemy import *
+from sqlalchemy.orm import scoped_session
 import os
 from sqlalchemy.orm import sessionmaker
 from models.city import City
@@ -24,13 +25,12 @@ class DBStorage:
         HBNB_MYSQL_DB = os.getenv("HBNB_MYSQL_DB")
         HBNB_ENV = os.getenv("HBNB_ENV")
 
-        db = f"mysql+mysqldb://{HBNB_MYSQL_DB}:{HBNB_MYSQL_USER}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_PWD}"
+        db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
         self.engine = create_engine(db, pool_pre_ping="True")
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(bind=engine.connect())
 
-        print("All seems here")
         """
         Base.metadata.create_all(engine)
         session_factory = sessionmaker(bind=engine, expire_on_commit=False)
