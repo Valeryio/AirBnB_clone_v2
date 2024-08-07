@@ -183,7 +183,7 @@ class HBNBCommand(cmd.Cmd):
             except KeyError:
                 print("** no instance found **")
         else:
-            result = storage.all(State)
+            result = storage.all()
             print(result)
             # print("** no instance found **")
 
