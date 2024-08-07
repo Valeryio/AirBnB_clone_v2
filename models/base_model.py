@@ -12,8 +12,8 @@ class BaseModel:
     """A base class for all hbnb models"""
 
     id = Column(String(60), primary_key=True, nullable=False)
-    created_date = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_date = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
     def __init__(self, *args, **kwargs):
@@ -33,6 +33,10 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
+        try:
+            self.__dict__.pop('_sa_instance_state')
+        except KeyError:
+                pass
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
