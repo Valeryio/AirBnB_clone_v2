@@ -15,7 +15,8 @@ class DBStorage:
 
     __engine = None
     __session = None
-
+    db_obj = {"City": City, "State": State, "User": User,
+              "Place": Place}
 
     def __init__(self):
         """create the engine self.__engine"""
@@ -67,19 +68,18 @@ class DBStorage:
     def all(self, cls=None):
         """query all types of objects"""
         session = self.session()
-        result = "Here"
+        result = "0"
         if cls is not None:
-            # result = self.session.scalars(select(cls)).all()
-            # result = self.session.execute(select(cls)).all()
-            pass
+            try:
+                # print("FOUND")
+                result = session.query(self.db_obj[cls]).all()
+            except KeyError:
+                pass
         else:
-            print("Yeah, IT'S NONE")
-            statement = select(City)
-            # result = self.session.scalars(select(City)).all()
-            # result = self.session.execute("SELECT * FROM users").all()
-            result = session.scalars(statement).all()
+            # print("Yeah, IT'S NONE")
+            result = session.query(City).all()
 
-        print("THE RESULT : ", result)
+        # print("THE RESULT : ", result)
         # creating a dictionary with all the object queried
         all_obj = {}
         for i in result:

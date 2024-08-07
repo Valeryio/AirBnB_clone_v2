@@ -3,6 +3,7 @@
 import cmd
 import os
 import sys
+from sqlalchemy import *
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -124,13 +125,13 @@ class HBNBCommand(cmd.Cmd):
         class_name, args = line_args[0], line_args[1:]
 
         # respectively replace the '"' and '=' by '' and ':'
-        # args = list(map(lambda x: x.replace("\"", "").replace("=", ":"), args))
+        args = list(map(lambda x: x.replace("\"", "").replace("=", ":"), args))
 
         # change each item into a new list name=Linson => ['name', 'Linson']
-        # args = list(map(lambda x: x.split(':'), args))
+        args = list(map(lambda x: x.split(':'), args))
         print("THe simple dict : ", args)
 
-        # args = {item[0]: item[1] for item in args}
+        args = {item[0]: item[1] for item in args}
 
         if not class_name:
             print("** class name missing **")
@@ -141,8 +142,8 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance = HBNBCommand.classes[class_name]()
 
-        # for key, value in args.items():
-            # setattr(new_instance, key, value)
+        for key, value in args.items():
+            setattr(new_instance, key, value)
 
         storage.save()
         print(new_instance.id)
@@ -183,6 +184,7 @@ class HBNBCommand(cmd.Cmd):
             except KeyError:
                 print("** no instance found **")
         else:
+            print("The args : ", c_name, c_id)
             result = storage.all()
             print(result)
             # print("** no instance found **")
