@@ -31,8 +31,9 @@ class DBStorage:
         self.engine = create_engine(db, pool_pre_ping="True")
 
         if HBNB_ENV == "test":
-            Base.metadata.drop_all(bind=self.engine.connect())
-
+            pass
+            # Base.metadata.drop_all(bind=self.engine.connect())
+            # Base.metadata.drop_all(bind=self.engine.c
         """
         Base.metadata.create_all(engine)
         session_factory = sessionmaker(bind=engine, expire_on_commit=False)
@@ -73,13 +74,10 @@ class DBStorage:
 
         if cls is not None:
             try:
-                # print("FOUND")
                 result = session.query(self.db_obj[cls]).all()
             except KeyError:
                 pass
         else:
-            # print("Yeah, IT'S NONE")
-
             for value in self.db_obj.values():
                 result = session.query(value).all()
 
@@ -87,8 +85,6 @@ class DBStorage:
                 for i in result:
                     key = str(i.__class__.__name__) + "." + str(i.id)
                     all_obj[key] = i
-
-        # print("THE RESULT : ", result)
 
         return all_obj
 
