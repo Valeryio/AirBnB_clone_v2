@@ -52,13 +52,10 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
 
-        """
         try:
-            if dictionary['_sa_instance_state']:
-                pass
-        except KeyError:
             dictionary.pop('_sa_instance_state')
-        """
+        except KeyError:
+                pass
         return dictionary
 
     def to_delete(self):

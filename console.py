@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
 
         # change each item into a new list name=Linson => ['name', 'Linson']
         args = list(map(lambda x: x.split(':'), args))
-        print("THe simple dict : ", args)
+        # print("THe simple dict : ", args)
 
         args = {item[0]: item[1] for item in args}
 
@@ -145,8 +145,8 @@ class HBNBCommand(cmd.Cmd):
         for key, value in args.items():
             setattr(new_instance, key, value)
 
-        storage.save()
         print(new_instance.id)
+        storage.new(new_instance)
         storage.save()
 
     def help_create(self):
@@ -159,6 +159,7 @@ class HBNBCommand(cmd.Cmd):
         new = args.partition(" ")
         c_name = new[0]
         c_id = new[2]
+        found = 0
 
         # guard against trailing args
         if c_id and ' ' in c_id:
@@ -184,10 +185,14 @@ class HBNBCommand(cmd.Cmd):
             except KeyError:
                 print("** no instance found **")
         else:
-            print("The args : ", c_name, c_id)
-            result = storage.all()
-            print(result)
-            # print("** no instance found **")
+            all_obj = storage.all()
+            for value in all_obj.values():
+                if c_id == value.id:
+                    found = 1
+                    print(value)
+
+            if found == 0:
+                print("** no instance found **")
 
     def help_show(self):
         """ Help information for the show command """
@@ -236,12 +241,26 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+
+            if HBNB_TYPE_STORAGE != "db":
+                for k, v in storage._FileStorage__objects.items():
+                    if k.split('.')[0] == args:
+                        print_list.append(str(v))
+            else:
+                for k, v in storage.all().items():
+                    if k.split('.')[0] == args:
+                        print_list.append(str(v))
+                
+                # print(storage.all())
+                # for k, v in storage.all()
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+            if HBNB_TYPE_STORAGE != "db":
+                for k, v in storage._FileStorage__objects.items():
+                    print_list.append(str(v))
+            else:
+                for k, v in storage.al().items():
+                    print_list.append(str(v))
+                # print(storage.all())
 
         print(print_list)
 

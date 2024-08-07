@@ -69,6 +69,8 @@ class DBStorage:
         """query all types of objects"""
         session = self.session()
         result = "0"
+        all_obj = {}
+
         if cls is not None:
             try:
                 # print("FOUND")
@@ -77,14 +79,17 @@ class DBStorage:
                 pass
         else:
             # print("Yeah, IT'S NONE")
-            result = session.query(City).all()
+
+            for value in self.db_obj.values():
+                result = session.query(value).all()
+
+            # creating a dictionary with all the object queried
+                for i in result:
+                    key = str(i.__class__.__name__) + "." + str(i.id)
+                    all_obj[key] = i
 
         # print("THE RESULT : ", result)
-        # creating a dictionary with all the object queried
-        all_obj = {}
-        for i in result:
-            key = str(i.__class__.name) + "." + str(i.id)
-            all_obj[key] = i
+
         return all_obj
 
     def new(self, obj):
