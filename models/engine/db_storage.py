@@ -28,7 +28,14 @@ class DBStorage:
         HBNB_ENV = os.getenv("HBNB_ENV")
 
         db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
-        self.engine = create_engine(db, pool_pre_ping="True")
+
+        # recreate the database if deleted by the tests
+        if not os.path.exists(db):
+            print("NOT DATABASE FOUND!")
+            # os.makedirs(os.path.dirname(db), exist_ok=True)
+            # self.engine = create_engine(db, pool_pre_ping="True")
+        else:
+            pass
 
         if HBNB_ENV == "test":
             pass
