@@ -30,16 +30,17 @@ class DBStorage:
         db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
 
         # recreate the database if deleted by the tests
-        if not os.path.exists(db):
-            print("NOT DATABASE FOUND!")
+        try:
             # os.makedirs(os.path.dirname(db), exist_ok=True)
             # self.engine = create_engine(db, pool_pre_ping="True")
-        else:
+            pass
+        except:
+            print("NOT DATABASE FOUND!")
             pass
 
+            self.engine = create_engine(db, pool_pre_ping="True")
         if HBNB_ENV == "test":
-            pass
-            # Base.metadata.drop_all(bind=self.engine.connect())
+            Base.metadata.drop_all(bind=self.engine.connect())
             # Base.metadata.drop_all(bind=self.engine.c
         """
         Base.metadata.create_all(engine)
