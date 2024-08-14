@@ -27,3 +27,11 @@ class Place(BaseModel, Base):
     cities = relationship("City", back_populates="places")
     users = relationship("User", back_populates="places")
     reviews = relationship("Review", back_populates="places")
+    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+
+place_amenity = Table(
+        "place_amenity",
+         Base.metadata,
+         Column("place_id", String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
+         COlumn("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
+)
