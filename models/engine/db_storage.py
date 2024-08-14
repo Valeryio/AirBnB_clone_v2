@@ -7,6 +7,7 @@ from models.city import City
 from models.state import State
 from models.user import User
 from models.place import Place
+import MySQLdb
 
 """This is the new storage engine"""
 
@@ -30,15 +31,14 @@ class DBStorage:
         db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
 
         # recreate the database if deleted by the tests
-        try:
-            # os.makedirs(os.path.dirname(db), exist_ok=True)
-            # self.engine = create_engine(db, pool_pre_ping="True")
-            pass
-        except:
-            print("NOT DATABASE FOUND!")
-            pass
+        safe_db = MySQLdb.connect(host=HBNB_MYSQL_HOST, user=HBNB_MYSQL_USER,
+                             password=HBNB_MYSQL_PWD)
+        cursor = safe_db.cursor()
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {HBNB_MYSQL_DB}")
 
-            self.engine = create_engine(db, pool_pre_ping="True")
+        # create safely a new engine
+        self.engine = create_engine(db, pool_pre_ping="True")
+
         if HBNB_ENV == "test":
             Base.metadata.drop_all(bind=self.engine.connect())
             # Base.metadata.drop_all(bind=self.engine.c
