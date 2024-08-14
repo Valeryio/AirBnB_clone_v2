@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import *
 from sqlalchemy.orm import relationship
+from models.amenity import Amenity
 
 
 class Place(BaseModel, Base):
@@ -11,6 +12,7 @@ class Place(BaseModel, Base):
 
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
+    amenity_id = Column(String(60), nullable=False)
 
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
@@ -22,16 +24,16 @@ class Place(BaseModel, Base):
 
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    # amenity_ids = []
 
     cities = relationship("City", back_populates="places")
     users = relationship("User", back_populates="places")
     reviews = relationship("Review", back_populates="places")
-    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+    amenities = relationship("Amenity", secondary="place_amenity",
+                             viewonly=False, back_populates="place_amenities")
 
 place_amenity = Table(
         "place_amenity",
          Base.metadata,
          Column("place_id", String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
-         COlumn("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
+         Column("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
 )

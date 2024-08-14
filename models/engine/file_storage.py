@@ -67,3 +67,7 @@ class FileStorage:
                 if obj_id == key:
                     self.__objects.pop(key)
                     break
+
+    def close(self):
+        """call reload() method for deserializing the JSON file to objects"""
+        self.reload()
