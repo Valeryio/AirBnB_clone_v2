@@ -13,14 +13,14 @@ class Place(BaseModel, Base):
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
 
     name = Column(String(128), nullable=False)
-    description = Column(String(1024))
+    description = Column(String(1024), default="NULL")
     number_rooms = Column(Integer, default=0, nullable=False)
     number_bathrooms = Column(Integer, default=0, nullable=False)
     max_guest = Column(Integer, default=0, nullable=False)
     price_by_night = Column(Integer, default=0, nullable=False)
 
-    latitude = Column(Float)
-    longitude = Column(Float)
+    latitude = Column(Float, default="NULL")
+    longitude = Column(Float, default="NULL")
     # amenity_ids = []
 
     cities = relationship("City", back_populates="places")
