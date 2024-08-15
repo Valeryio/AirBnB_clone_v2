@@ -2,7 +2,6 @@
 
 import os
 from sqlalchemy import *
-from models.base_model import Base, BaseModel
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from models.city import City
@@ -12,6 +11,13 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 import MySQLdb
+
+HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
+
+if HBNB_TYPE_STORAGE == "db":
+    from models.base_model import Base
+else:
+    pass
 
 """This is the new storage engine"""
 
