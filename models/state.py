@@ -28,7 +28,8 @@ else:
 
         @property
         def cities(self):
-            """ return the list of City objects from storage linked to the current State"""
+            """ return the list of City objects from storage
+            linked to the current State"""
             all_cities = super().save().all(City)
 
             for city_obj in all_cities.values():
