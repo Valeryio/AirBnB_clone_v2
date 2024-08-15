@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 import os
-from models.base_model import BaseModel, Base
 from sqlalchemy import *
 from sqlalchemy.orm import relationship
-from models.amenity import Amenity
+# from models.amenity import Amenity
 
 
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 if HBNB_TYPE_STORAGE == "db":
+
+    from models.base_model import BaseModel, Base
     class Place(BaseModel, Base):
         """ A place to stay """
         __tablename__ = "places"
@@ -44,6 +45,8 @@ if HBNB_TYPE_STORAGE == "db":
     )
 
 else:
+
+    from models.base_model import BaseModel
     class Place(BaseModel):
         """ A place to stay """
         city_id = ""
