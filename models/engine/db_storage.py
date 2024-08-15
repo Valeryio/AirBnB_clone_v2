@@ -31,11 +31,12 @@ class DBStorage:
         HBNB_MYSQL_DB = os.getenv("HBNB_MYSQL_DB")
         HBNB_ENV = os.getenv("HBNB_ENV")
 
-        db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
+        db = f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@\
+{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}"
 
         # recreate the database if deleted by the tests
         safe_db = MySQLdb.connect(host=HBNB_MYSQL_HOST, user=HBNB_MYSQL_USER,
-                             password=HBNB_MYSQL_PWD)
+                                  password=HBNB_MYSQL_PWD)
         cursor = safe_db.cursor()
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {HBNB_MYSQL_DB}")
 
@@ -117,7 +118,8 @@ class DBStorage:
     def reload(self):
         """reload the database"""
         Base.metadata.create_all(self.engine)
-        session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.engine,
+                                       expire_on_commit=False)
         self.session = scoped_session(session_factory)
 
     def close(self):
