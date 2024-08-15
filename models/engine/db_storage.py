@@ -10,6 +10,7 @@ from models.state import State
 from models.user import User
 from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
 import MySQLdb
 
 """This is the new storage engine"""
@@ -20,7 +21,7 @@ class DBStorage:
     __engine = None
     __session = None
     db_obj = {"City": City, "State": State, "User": User,
-              "Place": Place}
+              "Place": Place, "Review": Review, "Amenity": Amenity}
 
     def __init__(self):
         """create the engine self.__engine"""
@@ -81,25 +82,27 @@ class DBStorage:
     def all(self, cls=None):
         """query all types of objects"""
         session = self.session()
-        result = "0"
         all_obj = {}
 
         if cls is not None:
-            try:
-                result = session.query(cls).all()
-            except KeyError:
-                print("Yeah, there is an error")
-                pass
+            result = session.query(cls).all()
+
+            # creating a dictionary with all the object queried
+            for i in result:
+                key = str(i.__class__.__name__) + "." + str(i.id)
+                all_obj[key] = i
         else:
+            all_result = []
             for value in self.db_obj.values():
-                result = session.query(value).all()
+                all_result.append(session.query(value).all())
 
-        # creating a dictionary with all the object queried
-        for i in result:
-            key = str(i.__class__.__name__) + "." + str(i.id)
-            all_obj[key] = i
-            # print("We got this : ", all_obj)
-
+            # creating a dictionary with all the object queried
+            for obj_list in all_result:
+                for obj in obj_list:
+                    key = str(obj.__class__.__name__) + "." + str(obj.id)
+                    all_obj[key] = obj
+            # print("The result : ", all_result)
+            # print("ALl the objects :", all_obj)
         return all_obj
 
     def new(self, obj):

@@ -3,4 +3,5 @@
 from models import storage
 from models.state import State
 
-storage.all(State)
+result = storage.all()
+print("The result : ", result)
