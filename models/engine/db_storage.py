@@ -83,17 +83,19 @@ class DBStorage:
 
         if cls is not None:
             try:
-                result = session.query(self.db_obj[cls]).all()
+                result = session.query(cls).all()
             except KeyError:
+                print("Yeah, there is an error")
                 pass
         else:
             for value in self.db_obj.values():
                 result = session.query(value).all()
 
-            # creating a dictionary with all the object queried
-                for i in result:
-                    key = str(i.__class__.__name__) + "." + str(i.id)
-                    all_obj[key] = i
+        # creating a dictionary with all the object queried
+        for i in result:
+            key = str(i.__class__.__name__) + "." + str(i.id)
+            all_obj[key] = i
+            # print("We got this : ", all_obj)
 
         return all_obj
 

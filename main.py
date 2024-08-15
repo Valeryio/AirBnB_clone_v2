@@ -61,19 +61,21 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-result = exec_command(my_console, "all State", 4)
-print("THE RESULT : ", result)
+state_id = exec_command(my_console, "create State name=\"California\"")
+if state_id is None or state_id == "":
+    print("FAIL: Can't create State")
 
-if result is None or result == "":
-    print("FAIL: No states retrieved")
-if "my_id_c" not in result or "California" not in result :
-    print("FAIL: Missing information California")
-if "my_id_a" not in result or "Arizona" not in result :
-    print("FAIL: Missing information Arizona")
-if "my_id_n" not in result or "New York" not in result :
-    print("FAIL: Missing information New York")
-if "my_id_i" not in result or "Illinois" not in result :
-    print("FAIL: Missing information Illinois")
+city_id = exec_command(my_console, "create City state_id=\"{}\" name=\"Fremont\"".format(state_id))
+if city_id is None or city_id == "":
+    print("FAIL: Can't create City")
+
+user_id = exec_command(my_console, "create User email=\"a@a.com\" password=\"pwd\" first_name=\"fn\" last_name=\"ln\"")
+if user_id is None or user_id == "":
+    print("FAIL: Can't create User")
+
+place_id = exec_command(my_console, "create Place city_id=\"{}\" user_id=\"{}\" name=\"House\"".format(city_id, user_id))
+if place_id is None or place_id == "":
+    print("FAIL: Can't create Place")
     
 print("OK", end="")
 
