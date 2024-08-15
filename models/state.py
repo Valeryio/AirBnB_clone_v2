@@ -19,7 +19,19 @@ if HBNB_TYPE_STORAGE == "db":
         cities = relationship("City", back_populates="states")
 else:
     from models.base_model import BaseModel
+    from models.city import City
 
     class State(BaseModel):
         """ State class """
         name = ""
+        __cities = []
+
+        @property
+        def cities(self):
+            """ return the list of City objects from storage linked to the current State"""
+            all_cities = super().save().all(City)
+
+            for city_obj in all_cities.values():
+                if city_obj.state_id == self.id:
+                    self.__cities.append(city_obj)
+            return self.__cities

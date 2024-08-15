@@ -1,1 +1,40 @@
-{"State.e63e4ba7-bc11-4a48-96e0-666ebb0517bc": {"id": "e63e4ba7-bc11-4a48-96e0-666ebb0517bc", "created_at": "2024-08-15T10:29:12.771621", "updated_at": "2024-08-15T10:29:12.771627", "name": "California", "__class__": "State"}, "City.77d065fd-ddac-44bf-a730-0c33893d0340": {"id": "77d065fd-ddac-44bf-a730-0c33893d0340", "created_at": "2024-08-15T10:29:12.771875", "updated_at": "2024-08-15T10:29:12.771879", "state_id": "e63e4ba7-bc11-4a48-96e0-666ebb0517bc", "name": "Fremont", "__class__": "City"}, "City.51401d49-8c64-412c-80bf-af7d4b3a152c": {"id": "51401d49-8c64-412c-80bf-af7d4b3a152c", "created_at": "2024-08-15T10:29:12.772180", "updated_at": "2024-08-15T10:29:12.772184", "state_id": "e63e4ba7-bc11-4a48-96e0-666ebb0517bc", "name": "Napa", "__class__": "City"}, "State.f9825bc1-b10c-4944-8021-a8c4c77b3f9d": {"id": "f9825bc1-b10c-4944-8021-a8c4c77b3f9d", "created_at": "2024-08-15T10:29:12.779375", "updated_at": "2024-08-15T10:29:12.779398", "name": "California2", "__class__": "State"}, "City.1909eafb-7114-41f7-91a1-397f6733f737": {"id": "1909eafb-7114-41f7-91a1-397f6733f737", "created_at": "2024-08-15T10:29:12.779645", "updated_at": "2024-08-15T10:29:12.779667", "state_id": "f9825bc1-b10c-4944-8021-a8c4c77b3f9d", "name": "Sonoma", "__class__": "City"}, "State.84a8ee2e-83a3-4a6f-b0c0-927e78df73e6": {"id": "84a8ee2e-83a3-4a6f-b0c0-927e78df73e6", "created_at": "2024-08-15T10:51:49.708543", "updated_at": "2024-08-15T10:51:49.708550", "name": "CTN", "__class__": "State"}}
+{
+    "State.60dc2ba9-caf7-404b-bff1-541b0ef59d52": {
+        "id": "60dc2ba9-caf7-404b-bff1-541b0ef59d52",
+        "created_at": "2024-08-15T11:41:25.386663",
+        "updated_at": "2024-08-15T11:41:25.390071",
+        "name": "California",
+        "__class__": "State"
+    },
+    "City.882a93d7-caa9-4639-a9b4-0d84df3e75c3": {
+        "id": "882a93d7-caa9-4639-a9b4-0d84df3e75c3",
+        "created_at": "2024-08-15T11:41:25.386948",
+        "updated_at": "2024-08-15T11:41:25.386952",
+        "state_id": "60dc2ba9-caf7-404b-bff1-541b0ef59d52",
+        "name": "Fremont",
+        "__class__": "City"
+    },
+    "City.4901ca30-469e-47d5-9b36-0c7f78cdb1ad": {
+        "id": "4901ca30-469e-47d5-9b36-0c7f78cdb1ad",
+        "created_at": "2024-08-15T11:41:25.387202",
+        "updated_at": "2024-08-15T11:41:25.387207",
+        "state_id": "60dc2ba9-caf7-404b-bff1-541b0ef59d52",
+        "name": "Napa",
+        "__class__": "City"
+    },
+    "State.b3be1aad-facc-4ea2-a482-e22d97df6df9": {
+        "id": "b3be1aad-facc-4ea2-a482-e22d97df6df9",
+        "created_at": "2024-08-15T11:41:25.389519",
+        "updated_at": "2024-08-15T11:41:25.389525",
+        "name": "California2",
+        "__class__": "State"
+    },
+    "City.c93a31fa-ec58-44d5-bee9-3fbb50876b17": {
+        "id": "c93a31fa-ec58-44d5-bee9-3fbb50876b17",
+        "created_at": "2024-08-15T11:41:25.389835",
+        "updated_at": "2024-08-15T11:41:25.389838",
+        "state_id": "b3be1aad-facc-4ea2-a482-e22d97df6df9",
+        "name": "Sonoma",
+        "__class__": "City"
+    }
+}

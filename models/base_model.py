@@ -5,7 +5,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy import *
 # from models.__init__ import storage
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 if HBNB_TYPE_STORAGE == "db":
@@ -100,6 +100,7 @@ else:
             from models import storage
             self.updated_at = datetime.now()
             storage.save()
+            return storage
 
         def to_dict(self):
             """Convert instance into dict format"""
