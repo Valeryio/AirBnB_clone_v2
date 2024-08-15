@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 from sqlalchemy import *
 from models.base_model import Base, BaseModel
