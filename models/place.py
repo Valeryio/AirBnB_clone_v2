@@ -9,8 +9,8 @@ from sqlalchemy.orm import relationship
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 if HBNB_TYPE_STORAGE == "db":
-
     from models.base_model import BaseModel, Base
+
     class Place(BaseModel, Base):
         """ A place to stay """
         __tablename__ = "places"
@@ -34,19 +34,21 @@ if HBNB_TYPE_STORAGE == "db":
         users = relationship("User", back_populates="places")
         reviews = relationship("Review", back_populates="places")
         amenities = relationship("Amenity", secondary="place_amenity",
-                                 viewonly=False, back_populates="place_amenities")
-
+                                 viewonly=False,
+                                 back_populates="place_amenities")
 
     place_amenity = Table(
         "place_amenity",
         Base.metadata,
-        Column("place_id", String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
-        Column("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
+        Column("place_id", String(60), ForeignKey("places.id"),
+               primary_key=True, nullable=False),
+        Column("amenity_id", String(60), ForeignKey("amenities.id"),
+               primary_key=True, nullable=False)
     )
 
 else:
-
     from models.base_model import BaseModel
+
     class Place(BaseModel):
         """ A place to stay """
         city_id = ""

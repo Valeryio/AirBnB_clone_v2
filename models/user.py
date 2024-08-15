@@ -8,8 +8,8 @@ from sqlalchemy.orm import relationship
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 if HBNB_TYPE_STORAGE == "db":
-
     from models.base_model import Base, BaseModel
+
     class User(BaseModel, Base):
         """This class defines a user by various attributes"""
         __tablename__ = "users"
@@ -25,8 +25,8 @@ if HBNB_TYPE_STORAGE == "db":
         reviews = relationship("Review", back_populates="users")
         # cities = relationship("City", back_populates="cities")
 else:
-
     from models.base_model import BaseModel
+
     class User(BaseModel):
         """This class defines a user by various attributes"""
         email = ''
