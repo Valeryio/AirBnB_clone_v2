@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>States</h1>
+		<ul>
+			{% if all_state %}
+				{% for state in all_state.values() %}
+					<li>{{ state.id }}: <b> {{ state.name }} </b></li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</body>
+</html>

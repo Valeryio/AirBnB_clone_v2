@@ -7,14 +7,21 @@ from sqlalchemy import *
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
-from models.place import Place
+# from models.place import Place
 from models.state import State
 from models.city import City
-from models.amenity import Amenity
+# from models.amenity import Amenity
 from models.review import Review
 
 
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
+
+if HBNB_TYPE_STORAGE == "db":
+    from models.base_model import Base
+    from models.place import Place, Amenity
+else:
+    from models.place import Place
+    from models.amenity import Amenity
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -258,7 +265,7 @@ class HBNBCommand(cmd.Cmd):
                 for k, v in storage._FileStorage__objects.items():
                     print_list.append(str(v))
             else:
-                for k, v in storage.al().items():
+                for k, v in storage.all().items():
                     print_list.append(str(v))
                 # print(storage.all())
 

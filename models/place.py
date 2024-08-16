@@ -11,13 +11,22 @@ HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 if HBNB_TYPE_STORAGE == "db":
     from models.base_model import BaseModel, Base
 
+    place_amenity = Table(
+        "place_amenity",
+        Base.metadata,
+        Column("place_id", String(60), ForeignKey("places.id"),
+               primary_key=True, nullable=False),
+        Column("amenity_id", String(60), ForeignKey("amenities.id"),
+               primary_key=True, nullable=False)
+    )
+
     class Place(BaseModel, Base):
         """ A place to stay """
         __tablename__ = "places"
 
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
-        amenity_id = Column(String(60), nullable=False)
+        # amenity_id = Column(String(60), nullable=False)
 
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
@@ -32,19 +41,18 @@ if HBNB_TYPE_STORAGE == "db":
 
         cities = relationship("City", back_populates="places")
         users = relationship("User", back_populates="places")
-        reviews = relationship("Review", back_populates="places")
-        amenities = relationship("Amenity", secondary="place_amenity",
+        reviews = relationship("Review", back_populates="place")
+        amenities = relationship("Amenity", secondary=place_amenity,
                                  viewonly=False,
                                  back_populates="place_amenities")
 
-    place_amenity = Table(
-        "place_amenity",
-        Base.metadata,
-        Column("place_id", String(60), ForeignKey("places.id"),
-               primary_key=True, nullable=False),
-        Column("amenity_id", String(60), ForeignKey("amenities.id"),
-               primary_key=True, nullable=False)
-    )
+    class Amenity(BaseModel, Base):
+        __tablename__ = "amenities"
+
+        name = Column(String(128), nullable=False)
+        place_amenities = relationship("Place", secondary=place_amenity,
+                                       viewonly=False,
+                                       back_populates="amenities")
 
 else:
     from models.base_model import BaseModel

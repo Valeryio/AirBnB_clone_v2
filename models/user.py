@@ -22,7 +22,7 @@ if HBNB_TYPE_STORAGE == "db":
         last_name = Column(String(128), nullable=True)
 
         places = relationship("Place", back_populates="users")
-        reviews = relationship("Review", back_populates="users")
+        reviews = relationship("Review", back_populates="user")
         # cities = relationship("City", back_populates="cities")
 else:
     from models.base_model import BaseModel
